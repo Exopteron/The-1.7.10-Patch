@@ -99,14 +99,14 @@ class ModMixinsPlugin : IMixinConfigPlugin {
                     "tconstruct.TableFix"
             )
         ),   
-        CFM_PKG_FIX(
+/*         CFM_PKG_FIX(
             "CFM pkg fix",
             { true },
             "MrCrayfishFurnitureModv3.4.7(1.7.10)",
             arrayOf(
                     "cfm.PackageFix"
             )
-        ),   
+        ),    */
         BIBLIOCRAFT_PACKAGE_FIX(
                 "BiblioCraft Network Vulnerability",
                 { LoadingConfig.fixBibliocraftNetworkVulnerability },
@@ -114,6 +114,14 @@ class ModMixinsPlugin : IMixinConfigPlugin {
                 arrayOf(
                         "bibliocraft.network.PackageFix"
                 )
+        ),
+        GC_FIRE_FIX(
+            "Galacticraft fire fix",
+            { true },
+            "GalacticraftCore",
+            arrayOf(
+                    "galacticraft.FireFix"
+            )
         );
 
         constructor(fixname: String, applyIf: () -> Boolean, mixinClasses : Array<String>) : this(fixname, applyIf,null, mixinClasses)
