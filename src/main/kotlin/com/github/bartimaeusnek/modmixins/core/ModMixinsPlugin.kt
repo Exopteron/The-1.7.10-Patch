@@ -68,10 +68,6 @@ class ModMixinsPlugin : IMixinConfigPlugin {
     override fun getMixins(): List<String> {
         val mixins: MutableList<String> = ArrayList()
 
-        val gtjar = ClassPreLoader.getJar("gregtech-5.09")
-
-        loadJar(gtjar)
-
         MixinSets.values()
                 .filter(MixinSets::shouldBeLoaded)
                 .forEach {
@@ -81,7 +77,6 @@ class ModMixinsPlugin : IMixinConfigPlugin {
                     log.info("Loading modmixins plugin ${it.fixname} with mixins: {}", it.mixinClasses)
                     it.unloadJar()
                 }
-        unloadJar(gtjar)
         return mixins
     }
 
@@ -96,68 +91,28 @@ class ModMixinsPlugin : IMixinConfigPlugin {
      */
     enum class MixinSets(val fixname: String, private val applyIf: () -> Boolean, private val jar: String?, val mixinClasses: Array<String>)
     {
-        RAILCRAFT_BOILER_POLLUTION_FIX (
-                "Railcraft Pollution Fix",
-                { LoadingConfig.fixRailcraftBoilerPollution },
-                "Railcraft",
-                arrayOf(
-                    "railcraft.boiler.RailcraftBoilerPollution",
-                    "railcraft.tileentity.MultiOfenPollution",
-                    "railcraft.entity.RailcraftTunnleBorePollution"
-                )
-        ),
-        ROCKET_ADD_POLLUTION (
-                "Rocket Pollution Fix",
-                { LoadingConfig.fixRocketPollution },
-                "Galacticraft",
-                arrayOf(
-                        "galacticraft.entity.RocketPollutionAdder"
-                )
-        ),
-        GC_TIME_COMMAND_FIX_GTNH (
-            "Fix TimeCommand for GC without lag",
-                { LoadingConfig.fixTimeCommandGc },
-            "Galacticraft",
-                arrayOf(
-                    "vanilla.command.TimeCommandGCFix"
-                )
-        ),
-        FURNACE_ADD_POLLUTION (
-                "Furnace Pollution Fix",
-                { LoadingConfig.fixVanillaFurnacePollution },
-                arrayOf(
-                        "vanilla.tileentity.TileEntityFurnacePollution",
-                        "ic2.tileentity.IronFurnacePollution"
-                )
-        ),
-        TC_FURNACE_ADD_POLLUTION (
-                "Thaumcraft Furnace Pollution Fix",
-                { LoadingConfig.fixThaumcraftFurnacePollution },
-                arrayOf(
-                        "thaumcraft.tileentity.AlchemicalConstructPollutionAdder"
-                )
-        ),
-        EXPLOSION_POLLUTION_ADDITION(
-                "Explosion Pollution Fix",
-                { LoadingConfig.fixExplosionPollution },
-                arrayOf(
-                        "vanilla.world.ExplosionPollutionAdder"
-                )
-        ),
+        TINKERS_TABLE_FIX(
+            "Tinkers table fix",
+            { true },
+            "TConstruct",
+            arrayOf(
+                    "tconstruct.TableFix"
+            )
+        ),   
+        CFM_PKG_FIX(
+            "CFM pkg fix",
+            { true },
+            "MrCrayfishFurnitureModv3.4.7(1.7.10)",
+            arrayOf(
+                    "cfm.PackageFix"
+            )
+        ),   
         BIBLIOCRAFT_PACKAGE_FIX(
                 "BiblioCraft Network Vulnerability",
                 { LoadingConfig.fixBibliocraftNetworkVulnerability },
                 "BiblioCraft",
                 arrayOf(
                         "bibliocraft.network.PackageFix"
-                )
-        ),
-        ZTONES_PACKAGE_FIX(
-        "Ztones Network Vulnerability",
-                { LoadingConfig.fixZtonesNetworkVulnerability },
-                "Ztones",
-                arrayOf(
-                    "ztones.network.PackageFix"
                 )
         );
 

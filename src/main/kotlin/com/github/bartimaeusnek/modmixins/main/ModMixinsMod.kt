@@ -13,8 +13,6 @@ import cpw.mods.fml.common.eventhandler.EventPriority
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.relauncher.Side
 import cpw.mods.fml.relauncher.SideOnly
-import gregtech.api.util.GT_ModHandler
-import gregtech.api.util.GT_Utility
 import ic2.api.item.IC2Items
 import mods.railcraft.common.blocks.RailcraftBlocks
 import mods.railcraft.common.blocks.machine.alpha.EnumMachineAlpha
@@ -38,8 +36,7 @@ object ModMixinsMod {
     const val NAME = MODID
     const val MODLANGUAGEADAPTER = "net.shadowfacts.forgelin.KotlinAdapter"
     const val DEPENDENCIES = "required-after:spongemixins;" +
-                                    "required-after:forgelin;" +
-                                    "required-after:gregtech;"
+                                    "required-after:forgelin;"
     val log: Logger = LogManager.getLogger(NAME)
 
     @Mod.EventHandler
@@ -58,62 +55,9 @@ object ModMixinsMod {
         {
             event?.itemStack?.also{
 
-                if (LoadingConfig.fixVanillaFurnacePollution){
-                    val furnacePollution = "Produces ${LoadingConfig.furnacePollution} Pollution/Second"
-                    when {
-                        GT_Utility.areStacksEqual(it, ItemStack(Blocks.furnace)) -> {
-                            event.toolTip += furnacePollution
-                        }
-                        GT_Utility.areStacksEqual(it, IC2Items.getItem("ironFurnace")) -> {
-                            event.toolTip += furnacePollution
-                        }
-                    }
-                    if (Loader.isModLoaded("Thaumcraft"))
-                        if (GT_Utility.areStacksEqual(it, ItemApi.getBlock("blockStoneDevice",0)))
-                            event.toolTip += furnacePollution
-                    if (Loader.isModLoaded("thaumicbases"))
-                        if (GT_Utility.areStacksEqual(it, GT_ModHandler.getModItem("thaumicbases","advAlchFurnace",1,0)))
-                            event.toolTip += furnacePollution
-                }
 
-                if (LoadingConfig.fixRailcraftBoilerPollution && Loader.isModLoaded("Railcraft")) {
-                    val multi = "A complete Multiblock "
-                    val boilerPollution = "Produces ${LoadingConfig.fireboxPollution} Pollution/Second per firebox"
-                    val steamEnginePollution = "Produces ${LoadingConfig.hobbyistEnginePollution} Pollution/Second"
-                    val blastFurnacePollution = multi+"produces ${LoadingConfig.advancedCokeOvenPollution} Pollution/Second"
-                    val cokeOfenPollution = multi+"produces ${LoadingConfig.cokeOvenPollution} Pollution/Second"
-                    when {
-                        GT_Utility.areStacksEqual(it, ItemStack(RailcraftBlocks.getBlockMachineBeta(), 1, EnumMachineBeta.BOILER_FIREBOX_SOLID.ordinal)) -> {
-                            event.toolTip += boilerPollution
-                        }
-                        GT_Utility.areStacksEqual(it, ItemStack(RailcraftBlocks.getBlockMachineBeta(), 1, EnumMachineBeta.BOILER_FIREBOX_FLUID.ordinal)) -> {
-                            event.toolTip += boilerPollution
-                        }
-                        GT_Utility.areStacksEqual(it, ItemStack(RailcraftBlocks.getBlockMachineAlpha(), 1, EnumMachineAlpha.COKE_OVEN.ordinal)) -> {
-                            event.toolTip += cokeOfenPollution
-                        }
-                        GT_Utility.areStacksEqual(it, ItemStack(RailcraftBlocks.getBlockMachineAlpha(), 1, EnumMachineAlpha.BLAST_FURNACE.ordinal)) -> {
-                            event.toolTip += blastFurnacePollution
-                        }
-                        GT_Utility.areStacksEqual(it, EnumCart.BORE.cartItem) -> {
-                            event.toolTip += boilerPollution
-                        }
-                        GT_Utility.areStacksEqual(it, ItemStack(RailcraftBlocks.getBlockMachineBeta(), 1, EnumMachineBeta.ENGINE_STEAM_HOBBY.ordinal)) -> {
-                            event.toolTip += steamEnginePollution
-                        }
-                    }
-                }
 
-                if (LoadingConfig.fixRocketPollution && Loader.isModLoaded("GalacticraftCore")) {
-                    it.item::class.simpleName?.also { spln ->
-                        if (spln.contains("Rocket")){
-                            spln.find{d -> d.isDigit()}?.also { num ->
-                                event.toolTip += "Produces ${NumberFormat.getNumberInstance().format((LoadingConfig.rocketPollution shl (Character.getNumericValue(num) - 1)) / 100)} Pollution/Second when ignited"
-                                event.toolTip += "Produces ${NumberFormat.getNumberInstance().format(LoadingConfig.rocketPollution shl (Character.getNumericValue(num) - 1))} Pollution/Second when flying"
-                            }
-                        }
-                    }
-                }
+
             }
         }
     }
