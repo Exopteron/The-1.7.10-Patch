@@ -1,14 +1,14 @@
 [
   {
-    "modid": "modmixins",
-    "name": "Mod Mixins",
-    "description": "Mixins for Mods",
+    "modid": "the1710patch",
+    "name": "The 1.7.10 Patch",
+    "description": "Attempt to fix exploits in The 1.7.10 Pack",
     "version": "${version}",
     "mcversion": "${mcversion}",
     "url": "",
     "updateUrl": "",
-    "authorList": ["bartimaeusnek"],
-    "credits": "mitchej123 for Hodgepodge",
+    "authorList": ["Exopteron"],
+    "credits": "mitchej123 for Hodgepodge, bartimaeusnek for ModMixins",
     "logoFile": "",
     "screenshots": [],
     "dependencies": ["required-after: forgelin;required-after: spongemixins;"]
