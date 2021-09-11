@@ -3,8 +3,9 @@ package com.github.bartimaeusnek.modmixins.mixins.tconstruct
 import io.netty.channel.ChannelHandlerContext;
 import cpw.mods.fml.common.network.ByteBufUtils
 import io.netty.buffer.ByteBuf
-import tconstruct.util.network.PatternTablePacket
+import tconstruct.util.network.AccessoryInventoryPacket
 import tconstruct.tools.items.Pattern
+import tconstruct.armor.ArmorProxyCommon
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemMap
@@ -21,38 +22,23 @@ import net.minecraft.world.World
 import net.minecraft.tileentity.TileEntity
 import tconstruct.tools.logic.StencilTableLogic
 import mantle.blocks.abstracts.InventoryLogic
-@Mixin(value = [PatternTablePacket::class])
-abstract class TableFix {
-
+import tconstruct.armor.player.TPlayerStats
+import tconstruct.armor.items.Knapsack
+@Mixin(value = [AccessoryInventoryPacket::class])
+abstract class KnapsackFix {
+    
     @Shadow 
-    private var contents: ItemStack? = null;
-
-    @Shadow 
-    private var x: Int = 0;
-    @Shadow 
-    private var y: Int = 0;
-    @Shadow 
-    private var z: Int = 0;
+    private var type: Int = 0;
 
     @Inject(method = ["handleServerSide"], at = [At(value = "HEAD")], remap = false, cancellable = true)
     fun fixHandleServerSide(player: EntityPlayer, c: CallbackInfo) {
-        if (contents?.item !is Pattern && contents?.item?.getUnlocalizedName() != null) {
-            ModMixinsMod.log.error(player.displayName + " attempted to cheat in " + contents?.item?.getUnlocalizedName()  + " using TinkerGive exploit.");
-            c.cancel();
-            return;
-        }
-        val world: World = player.worldObj;
-        val te: TileEntity = world.getTileEntity(x, y, z);
-        if (te !is InventoryLogic) {
-            c.cancel();
-        }
-        val itemstack: ItemStack? = (te as? InventoryLogic)?.getStackInSlot(0);
-        if (itemstack == null) {
-            c.cancel();
-        }
-        if (itemstack?.unlocalizedName != "item.tconstruct.Pattern.blank_pattern") {
-/*             ModMixinsMod.log.error(player.displayName + " attempted to dupe " + itemstack?.unlocalizedName + " !"); */
-            c.cancel();
+        if (type == ArmorProxyCommon.knapsackGuiID) {
+            val stats: TPlayerStats = TPlayerStats.get(player);
+            val armor = stats.armor;
+            val slotStack = armor.getStackInSlot(2);
+            if (slotStack == null || slotStack.item !is Knapsack) {
+                c.cancel();
+            }
         }
     }
 }

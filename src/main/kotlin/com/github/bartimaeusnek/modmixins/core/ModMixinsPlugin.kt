@@ -14,7 +14,7 @@ class ModMixinsPlugin : IMixinConfigPlugin {
     //private val isDebug = true
 
     companion object {
-        const val name = "ModMixinsPlugin"
+        const val name = "The 1.7.10 Patch"
         val log: Logger = LogManager.getLogger(name)
         var thermosTainted : Boolean = false
 
@@ -98,7 +98,79 @@ class ModMixinsPlugin : IMixinConfigPlugin {
             arrayOf(
                     "tconstruct.TableFix"
             )
-        ),   
+        ),  
+        TINKERS_KNAPSACK_FIX(
+            "Tinkers knapsack fix",
+            { true },
+            "TConstruct",
+            arrayOf(
+                    "tconstruct.KnapsackFix"
+            )
+        ),  
+        BUILDCRAFT_MARKERGIVE_FIX(
+            "Build markergive fix",
+            { true },
+            "buildcraft",
+            arrayOf(
+                    "buildcraft.BuildMarkerGiveFix"
+            )
+        ),  
+        EIO_TP_FIX(
+            "EIO Teleport fix",
+            { true },
+            "EnderIO",
+            arrayOf(
+                    "enderio.EIOTPFix"
+            )
+    ),
+    THERMAL_CACHE_FIX(
+        "Thermal cache fix",
+        { true },
+        "ThermalExpansion",
+        arrayOf(
+                "thermal.CacheFix"
+        )
+),
+    THERMAL_CAP_FIX(
+        "Thermal capacitor fix",
+        { true },
+        "ThermalExpansion",
+        arrayOf(
+                "thermal.CapacitorFix"
+        )
+),
+MEK_PERSONALCHEST_FIX(
+    "Mekanism personal chest fix",
+    { true },
+    "Mekanism",
+    arrayOf(
+            "mekanism.PersonalChestFix"
+    )
+),  
+MEK_DIGIMINER_FIX(
+    "Mekanism digital miner fix",
+    { true },
+    "Mekanism",
+    arrayOf(
+            "mekanism.DigitalMinerFix"
+    )
+),  
+MEK_SECURITY_FIX(
+    "Mekanism security fix",
+    { true },
+    "Mekanism",
+    arrayOf(
+            "mekanism.SecurityFix"
+    )
+),  
+/*     EIO_NO_PRIVATES(
+        "EIO Noprivates",
+        { true },
+        "EnderIO",
+        arrayOf(
+                "enderio.IDAccessor"
+        )
+), */
 /*         CFM_PKG_FIX(
             "CFM pkg fix",
             { true },
