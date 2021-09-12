@@ -37,7 +37,7 @@ abstract class TableFix {
     @Inject(method = ["handleServerSide"], at = [At(value = "HEAD")], remap = false, cancellable = true)
     fun fixHandleServerSide(player: EntityPlayer, c: CallbackInfo) {
         if (contents?.item !is Pattern && contents?.item?.getUnlocalizedName() != null) {
-            ModMixinsMod.log.error(player.displayName + " attempted to cheat in " + contents?.item?.getUnlocalizedName()  + " using TinkerGive exploit.");
+            ModMixinsMod.log.warn("[Possible Exploit]: " + player.displayName + " attempted to spawn " + contents?.item?.getUnlocalizedName() + " in a stencil table using the TinkerGive exploit.");
             c.cancel();
             return;
         }
@@ -51,7 +51,8 @@ abstract class TableFix {
             c.cancel();
         }
         if (itemstack?.unlocalizedName != "item.tconstruct.Pattern.blank_pattern") {
-/*             ModMixinsMod.log.error(player.displayName + " attempted to dupe " + itemstack?.unlocalizedName + " !"); */
+            ModMixinsMod.log.warn("[Possible Exploit]: " + player.displayName + " attempted to use a stencil table with no blank pattern.");
+/*             ModMixinsMod.log.warn(player.displayName + " attempted to dupe " + itemstack?.unlocalizedName + " !"); */
             c.cancel();
         }
     }

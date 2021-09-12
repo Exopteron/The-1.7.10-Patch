@@ -45,6 +45,7 @@ abstract class PersonalChestFix {
                         c.cancel();
                     }
                     if (player.getDistance((message.coord4D.xCoord).toDouble(), (message.coord4D.yCoord).toDouble(), (message.coord4D.zCoord).toDouble()) > 6.0) {
+                        ModMixinsMod.log.warn("[Possible Exploit]: " + player.displayName + " attempted to access a Mekanism Personal Chest from further than 6 blocks away.");
                         c.cancel();
                     }
                     val tileEntity: TileEntityPersonalChest? = x!! as? TileEntityPersonalChest;
@@ -52,21 +53,14 @@ abstract class PersonalChestFix {
                         c.cancel();
                     }
                     if (!SecurityUtils.canAccess(player, tileEntity)) {
+                        ModMixinsMod.log.warn("[Possible Exploit]: " + player.displayName + " attempted to access a Mekanism Personal Chest without security access.");
                         c.cancel();
                     }
-/*                     val security = tileEntity!!.getSecurity();
-                    val owner = security.getOwner();
-                    val mode = security.getMode();
-                    if (mode == SecurityMode.PRIVATE) {
-                        if (player?.getDisplayName() != owner) {
-                            c.cancel();
-                        }
-                    } */
                 } else {
                     val stack = player.getCurrentEquippedItem();
                     if (MachineType.get(stack) == MachineType.PERSONAL_CHEST) {
-/*                         val inventory = InventoryPersonalChest(player); */
                         if (!SecurityUtils.canAccess(player, stack)) {
+                            ModMixinsMod.log.warn("[Possible Exploit]: " + player.displayName + " attempted to access a handheld Mekanism Personal Chest without security access.");
                             c.cancel();
                         } 
                     }

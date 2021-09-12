@@ -27,6 +27,7 @@ class FireFix {
     private var type: EnumSimplePacket? = null;
     @Inject(method = ["handleServerSide"], at = [At(value = "HEAD")], remap = false, cancellable = true)
     private fun handleServerSideFix(player: EntityPlayer, c: CallbackInfo) {
+        ModMixinsMod.log.warn("[Possible Exploit]: " + player.displayName + " sent GalacticFire packet.");
         // why does this exist!??!?
         if (type == EnumSimplePacket.S_SET_ENTITY_FIRE) {
             c.cancel();

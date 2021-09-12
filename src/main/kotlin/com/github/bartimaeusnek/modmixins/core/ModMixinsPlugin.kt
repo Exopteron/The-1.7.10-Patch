@@ -163,6 +163,14 @@ MEK_SECURITY_FIX(
             "mekanism.SecurityFix"
     )
 ),  
+CARPENTER_USE_FIX(
+    "Carpenter's Blocks use fix",
+    { true },
+    "Carpenter's",
+    arrayOf(
+            "cblocks.CarpenterUseFix"
+    )
+),  
 /*     EIO_NO_PRIVATES(
         "EIO Noprivates",
         { true },
@@ -171,14 +179,22 @@ MEK_SECURITY_FIX(
                 "enderio.IDAccessor"
         )
 ), */
-/*         CFM_PKG_FIX(
+         CFM_PKG_FIX(
             "CFM pkg fix",
             { true },
             "MrCrayfishFurnitureModv3.4.7(1.7.10)",
             arrayOf(
                     "cfm.PackageFix"
             )
-        ),    */
+        ),    
+        CFM_WATER_FIX(
+            "CFM water fix",
+            { true },
+            "MrCrayfishFurnitureModv3.4.7(1.7.10)",
+            arrayOf(
+                    "cfm.WaterFix"
+            )
+        ), 
         BIBLIOCRAFT_PACKAGE_FIX(
                 "BiblioCraft Network Vulnerability",
                 { LoadingConfig.fixBibliocraftNetworkVulnerability },

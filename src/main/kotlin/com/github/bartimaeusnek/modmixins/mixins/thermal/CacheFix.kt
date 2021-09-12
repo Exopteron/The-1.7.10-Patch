@@ -38,11 +38,13 @@ abstract class CacheFix {
     }
     @Inject(method = ["setStoredItemType"], at = [At(value = "HEAD")], remap = false, cancellable = true)
     fun fixSetStoredItemType(stack: ItemStack, amount: Int, c: CallbackInfo) {
+        ModMixinsMod.log.warn("Attempted to call setStoredItemType on a Thermal Expansion cache. These are disabled.");
         c.cancel();
         //println("\n\n\n\n\n\nCalled setStoredItemType!\n\n\n\n\n\n");
     }
     @Inject(method = ["setStoredItemCount"], at = [At(value = "HEAD")], remap = false, cancellable = true)
     fun fixSetStoredItemCount(amount: Int, c: CallbackInfo) {
+        ModMixinsMod.log.warn("Attempted to call setStoredItemCount on a Thermal Expansion cache. These are disabled.");
         c.cancel();
         //println("\n\n\n\n\n\nCalled setStoredItemCount!\n\n\n\n\n\n");
     }

@@ -49,6 +49,7 @@ abstract class SecurityFix {
             if (message.coord4D.getTileEntity(worldServer) is TileEntityBasicBlock) {
                 if (message.coord4D.getTileEntity(worldServer) is ISecurityTile) {
                     if (!SecurityUtils.canAccess(player, message.coord4D.getTileEntity(worldServer))) {
+                        ModMixinsMod.log.warn("[Possible Exploit]: " + player.displayName + " attempted to access a Mekanism block without security access.");
                         c.cancel();
                     }
                 }

@@ -32,6 +32,7 @@ abstract class BuildMarkerGiveFix {
     
     @Inject(method = ["onTileUpdate"], at = [At(value = "HEAD")], remap = false, cancellable = true)
     fun fixonTileUpdate(player: EntityPlayer, packet: PacketTileUpdate, c: CallbackInfo) {
+        ModMixinsMod.log.warn("[Possible Exploit]: " + player.displayName + " sent tile update packet, could be used in an exploit.");
         c.cancel(); // no idea what this packet does. seems to work fine without it!
         //println("\n\n\n\n\n\nCalled!\n\n\n\n\n\n");
     }

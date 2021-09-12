@@ -73,26 +73,24 @@ public interface IDAccessor {
         val real_source = TravelSource.values()[source];
         if (held.item is IItemOfTravel) {
             val req_power = getRequiredPower(toTp, real_source, BlockCoord(x, y, z));
-            println("usages: $powerUse $req_power");
             if (powerUse != req_power || req_power == 0) {
-                println("$powerUse $req_power");
+                ModMixinsMod.log.warn("[Possible Exploit]: " + ctx.getServerHandler().playerEntity.displayName + " sent Ender IO PacketTravelEvent using Staff of Travelling with incorrect power usage calculation. Possible exploit?");
                 c.cancel();
             }
             val world = toTp.worldObj;
             val can_tp = canTeleportTo(toTp, real_source, BlockCoord(x, y, z), world);
             if (!can_tp) {
-                println("Cant");
+                ModMixinsMod.log.warn("[Possible Exploit]: " + ctx.getServerHandler().playerEntity.displayName + " sent Ender IO PacketTravelEvent using Staff of Travelling to an invalid location. Possible exploit?");
                 c.cancel();
             }
         } else {
-            val a = Math.floor(toTp.posX).toInt();
-            val b = Math.floor((toTp.posY - toTp.getYOffset())).toInt() - 1;
-            val cv = Math.floor(toTp.posZ).toInt();
-            println("$a $b $cv")
+            val fromX = Math.floor(toTp.posX).toInt();
+            val fromY = Math.floor((toTp.posY - toTp.getYOffset())).toInt() - 1;
+            val fromZ = Math.floor(toTp.posZ).toInt();
             val block = toTp.worldObj.getTileEntity(Math.floor(toTp.posX).toInt(), Math.floor((toTp.posY - toTp.getYOffset())).toInt() - 1, Math.floor(toTp.posZ).toInt());
             val block2 = toTp.worldObj.getTileEntity(x, y, z);
             if (block !is TileTravelAnchor || block2 !is TileTravelAnchor) {
-                ModMixinsMod.log.error("Cheater!");
+                ModMixinsMod.log.warn("[Possible Exploit]: " + ctx.getServerHandler().playerEntity.displayName + " attempted to teleport using a Travel Anchor while not being on one/destination was not an anchor. ($fromX, $fromY, $fromZ to $x, $y, $z)");
                 c.cancel();
             }
         }
@@ -196,7 +194,7 @@ public interface IDAccessor {
     fun fixdoServerTeleport(toTp: Entity, x: Int, y: Int, z: Int, powerUse: Int, conserveMotion: Boolean, source: TravelSource, c: CallbackInfoReturnable<Boolean>) {
         val block = toTp.worldObj.getTileEntity(toTp.posX.toInt(), toTp.posY.toInt() - 1, toTp.posZ.toInt());
         if (block !is TileTelePad) {
-            ModMixinsMod.log.error("Cheater!");
+            ModMixinsMod.log.warn("Cheater!");
             c.cancel();
         }
     } */

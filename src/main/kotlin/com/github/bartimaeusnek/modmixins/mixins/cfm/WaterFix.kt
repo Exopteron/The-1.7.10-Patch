@@ -18,19 +18,12 @@ import org.spongepowered.asm.mixin.gen.Accessor
 import org.spongepowered.asm.mixin.injection.At
 import org.spongepowered.asm.mixin.injection.Inject
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable
 @Mixin(value = [MessageTakeWater::class])
 public class WaterFix {
-    @Shadow 
-    private var x: Int? = null;
-
-    @Shadow 
-    private var y: Int? = null;
-
-    @Shadow 
-    private var z: Int? = null;
-
     @Inject(method = ["onMessage"], at = [At(value = "HEAD")], remap = false, cancellable = true)
-    public fun onMessage(message: MessageTakeWater, ctx: MessageContext, c: CallbackInfo) {
+    public fun onMessage(message: MessageTakeWater, ctx: MessageContext, c: CallbackInfoReturnable<IMessage>) {
+        ModMixinsMod.log.warn("[Possible Exploit]: " + ctx.getServerHandler().playerEntity.displayName + " sent MrCrayfish's Furniture Mod MessageTakeWater packet. Possible exploit?");
         c.cancel();
         //val block = ctx.getServerHandler().playerEntity.worldObj.getBlock(x?, y?, z?);
     }

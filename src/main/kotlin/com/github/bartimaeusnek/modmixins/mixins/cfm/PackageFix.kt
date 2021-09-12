@@ -25,6 +25,7 @@ class PackageFix {
     @Inject(method = ["onMessage"], at = [At(value = "HEAD")], remap = false, cancellable = true)
     private fun onMessageFix(message: MessagePackage, ctx: MessageContext, c: CallbackInfoReturnable<IMessage>) {
         val message = ChatComponentText("Packages are disabled.");
+        ModMixinsMod.log.warn("[Possible Exploit]: " + ctx.getServerHandler().playerEntity.displayName + " attempted to use a MrCrayfish's Furniture Mod package. Possible exploit?");
         ctx.getServerHandler().playerEntity.addChatMessage(message);
         c.cancel();
         //val block = ctx.getServerHandler().playerEntity.worldObj.getBlock(x?, y?, z?);

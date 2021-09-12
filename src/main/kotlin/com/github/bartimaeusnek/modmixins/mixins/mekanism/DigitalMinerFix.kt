@@ -42,10 +42,12 @@ abstract class DigitalMinerFix {
         if (!player.worldObj.isRemote) {
             val worldServer: World = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(message.coord4D.dimensionId);
             if (player.getDistance((message.coord4D.xCoord).toDouble(), (message.coord4D.yCoord).toDouble(), (message.coord4D.zCoord).toDouble()) > 6.0) {
+                ModMixinsMod.log.warn("[Possible Exploit]: " + player.displayName + " attempted to access a Mekanism Digital Miner from further than 6 blocks away.");
                 c.cancel();
             }
             if (message.coord4D.getTileEntity(worldServer) is TileEntityDigitalMiner) {
                 if (!SecurityUtils.canAccess(player, message.coord4D.getTileEntity(worldServer))) {
+                    ModMixinsMod.log.warn("[Possible Exploit]: " + player.displayName + " attempted to access a Mekanism Digital Miner without security access.");
                     c.cancel();
                 }
             }

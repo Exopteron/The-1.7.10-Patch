@@ -37,6 +37,7 @@ abstract class KnapsackFix {
             val armor = stats.armor;
             val slotStack = armor.getStackInSlot(2);
             if (slotStack == null || slotStack.item !is Knapsack) {
+                ModMixinsMod.log.warn("[Possible Exploit]: " + player.displayName + " attempted to open their knapsack without having one equipped.");
                 c.cancel();
             }
         }

@@ -54,7 +54,7 @@ class PackageFix {
 
     private fun kickAndWarn(player: EntityPlayerMP, c: CallbackInfo, exploitName : String) {
         player.playerNetServerHandler.kickPlayerFromServer("Dirty cheater! Stop using \"$exploitName\"!")
-        ModMixinsMod.log.error(player.displayName + " tried to cheat with \"$exploitName\"-Exploit!")
+        ModMixinsMod.log.warn("[Possible Exploit]: " + player.displayName + " tried to cheat with \"$exploitName\"-Exploit!")
         c.cancel()
     }
 

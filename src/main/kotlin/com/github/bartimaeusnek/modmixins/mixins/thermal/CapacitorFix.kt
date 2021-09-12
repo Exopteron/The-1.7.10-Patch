@@ -25,8 +25,8 @@ import net.minecraft.item.Item
 abstract class CapacitorFix : Item() {
     @Inject(method = ["<init>()V"], at = [At(value = "RETURN")], remap = false, cancellable = true)
     private fun constructorFix(c: CallbackInfo) {
-        println("\n\n\n\n\n\n\n\n\n\n\nHI!!!\n\n\n\n\n\n\n\n\n\n\n");
-        setNoRepair();
+/*         println("\n\n\n\n\n\n\n\n\n\n\nHI!!!\n\n\n\n\n\n\n\n\n\n\n");
+        setNoRepair(); */
         //val block = ctx.getServerHandler().playerEntity.worldObj.getBlock(x?, y?, z?);
     }
 }
